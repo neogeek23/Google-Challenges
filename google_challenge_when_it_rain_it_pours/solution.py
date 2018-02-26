@@ -40,16 +40,18 @@ def answer(heights):
 		if i < height_dict[ordered_unique_heights[0]][0]:
 			# tallest is to my right
 			while height_dict[ordered_unique_heights[j]][0] > i:
+				# Search for largest left bound
 				j += 1
-			height_sum += ordered_unique_heights[j] - heights[i]
 		elif i > height_dict[ordered_unique_heights[0]][len(height_dict[ordered_unique_heights[0]]) - 1]:
 			# tallest is to my left
 			while height_dict[ordered_unique_heights[j]][len(height_dict[ordered_unique_heights[j]]) - 1] < i:
+				# Search for largest right bound
 				j += 1
-			height_sum += ordered_unique_heights[j] - heights[i]
 		else:
 			# I am between the tallest
-			height_sum += ordered_unique_heights[0] - heights[i]
+			j = 0
+
+		height_sum += ordered_unique_heights[j] - heights[i]
 
 	return height_sum
 
