@@ -1,4 +1,5 @@
 import random
+from timeit import default_timer as timer
 from collections import defaultdict
 
 
@@ -55,6 +56,7 @@ def answer(heights):
 
 	return height_sum
 
+
 def random_building_heights(howmany, range_limt):
 	result = []
 
@@ -64,12 +66,12 @@ def random_building_heights(howmany, range_limt):
 
 building_easy1 = [10, 1, 3, 6, 6, 1, 6, 2]
 building_easy2 = [10, 1, 10, 1, 1, 10, 4, 3, 2, 8, 8]
-building_easy3 = random_building_heights(random.randint(1, 30), 10)
+building_easy3 = random_building_heights(100, 100000)
 building_easy4 = [1, 4, 2, 5, 1, 2, 3]
 building_easy5 = [1, 2, 3, 2, 1]
 building_hard1 = random_building_heights(random.randint(1, 9000), 100000)
 building_hard2 = random_building_heights(random.randint(1, 9000), 100000)
-building_hard3 = random_building_heights(random.randint(1, 9000), 100000)
+building_hard3 = random_building_heights(9000, 100000)
 
 print("\nBuilding heights:  " + str(building_easy1))
 print("Summed:  " + str(answer_slow(building_easy1)))
@@ -80,8 +82,14 @@ print("Summed:  " + str(answer_slow(building_easy2)))
 print("Summed:  " + str(answer(building_easy2)))
 
 print("\nBuilding heights:  " + str(building_easy3))
+start1 = timer()
 print("Summed:  " + str(answer_slow(building_easy3)))
+end1 = timer()
+start2 = timer()
 print("Summed:  " + str(answer(building_easy3)))
+end2 = timer()
+print(end1-start1)
+print(end2-start2)
 
 print("\nBuilding heights:  " + str(building_easy4))
 print("Summed:  " + str(answer_slow(building_easy4)))
@@ -98,4 +106,7 @@ print("\nBuilding heights:  " + str(building_hard2))
 print("Summed:  " + str(answer(building_hard2)))
 
 print("\nBuilding heights:  " + str(building_hard3))
+start3 = timer()
 print("Summed:  " + str(answer(building_hard3)))
+end3 = timer()
+print(end3-start3)
