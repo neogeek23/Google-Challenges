@@ -3,7 +3,7 @@ from timeit import default_timer as timer
 from collections import defaultdict
 
 
-def answer_slow(heights):
+def answer_slowest(heights):
 	height_dict = defaultdict(list)
 	largest_height = 0
 
@@ -25,7 +25,7 @@ def answer_slow(heights):
 	return sum_height
 
 
-def answer(heights):
+def answer_slow(heights):
 	ordered_unique_heights = list(set(heights))
 	ordered_unique_heights.sort(reverse=True)
 	height_dict = defaultdict(list)
@@ -57,6 +57,38 @@ def answer(heights):
 	return height_sum
 
 
+def answer(heights):
+	largest = 0
+	largest_at_smallest_index = 0
+	largest_at_biggest_index = 0
+
+	index = 0
+	for h in heights:
+		if h > largest:
+			largest = h
+			largest_at_smallest_index = index
+		if h == largest:
+			largest_at_biggest_index = index
+		index += 1
+
+	height_sum = 0
+	largest_so_far = 0
+	for i in range(largest_at_smallest_index):
+		if heights[i] > largest_so_far:
+			largest_so_far = heights[i]
+		height_sum += largest_so_far - heights[i]
+
+	largest_so_far = 0
+	for i in range(len(heights) - 1, largest_at_biggest_index, -1):
+		if heights[i] > largest_so_far:
+			largest_so_far = heights[i]
+		height_sum += largest_so_far - heights[i]
+
+	for i in range(largest_at_smallest_index + 1, largest_at_biggest_index):
+		height_sum += largest - heights[i]
+	return height_sum
+
+
 def random_building_heights(howmany, range_limt):
 	result = []
 
@@ -74,39 +106,56 @@ building_hard2 = random_building_heights(random.randint(1, 9000), 100000)
 building_hard3 = random_building_heights(9000, 100000)
 
 print("\nBuilding heights:  " + str(building_easy1))
+print("Summed:  " + str(answer_slowest(building_easy1)))
 print("Summed:  " + str(answer_slow(building_easy1)))
 print("Summed:  " + str(answer(building_easy1)))
 
 print("\nBuilding heights:  " + str(building_easy2))
+print("Summed:  " + str(answer_slowest(building_easy2)))
 print("Summed:  " + str(answer_slow(building_easy2)))
 print("Summed:  " + str(answer(building_easy2)))
 
 print("\nBuilding heights:  " + str(building_easy3))
 start1 = timer()
-print("Summed:  " + str(answer_slow(building_easy3)))
+print("Summed:  " + str(answer_slowest(building_easy3)))
 end1 = timer()
 start2 = timer()
-print("Summed:  " + str(answer(building_easy3)))
+print("Summed:  " + str(answer_slow(building_easy3)))
 end2 = timer()
+start3 = timer()
+print("Summed:  " + str(answer(building_easy3)))
+end3 = timer()
 print(end1-start1)
 print(end2-start2)
+print(end3-start3)
+print((end1-start1)/(end3-start3))
+print((end2-start2)/(end3-start3))
 
 print("\nBuilding heights:  " + str(building_easy4))
+print("Summed:  " + str(answer_slowest(building_easy4)))
 print("Summed:  " + str(answer_slow(building_easy4)))
 print("Summed:  " + str(answer(building_easy4)))
 
 print("\nBuilding heights:  " + str(building_easy5))
+print("Summed:  " + str(answer_slowest(building_easy5)))
 print("Summed:  " + str(answer_slow(building_easy5)))
 print("Summed:  " + str(answer(building_easy5)))
 
 print("\nBuilding heights:  " + str(building_hard1))
+print("Summed:  " + str(answer_slow(building_hard1)))
 print("Summed:  " + str(answer(building_hard1)))
 
 print("\nBuilding heights:  " + str(building_hard2))
+print("Summed:  " + str(answer_slow(building_hard2)))
 print("Summed:  " + str(answer(building_hard2)))
 
 print("\nBuilding heights:  " + str(building_hard3))
-start3 = timer()
+start4 = timer()
+print("Summed:  " + str(answer_slow(building_hard3)))
+end4 = timer()
+start5 = timer()
 print("Summed:  " + str(answer(building_hard3)))
-end3 = timer()
-print(end3-start3)
+end5 = timer()
+print(end4-start4)
+print(end5-start5)
+print((end4-start4)/(end5-start5))
